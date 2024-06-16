@@ -1,6 +1,6 @@
 <?php
 
-class M_TiposUsuario extends \DB\SQL\Mapper
+class M_TipoUsuarios extends \DB\SQL\Mapper
 {
     public function __construct()
     {

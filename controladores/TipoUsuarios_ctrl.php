@@ -9,7 +9,7 @@ class TipoUsuarios_ctrl
 
 
     public function verTiposUsuario($f3) {
-        $cadenaSql = "SELECT * FROM Tiposusuario";
+        $cadenaSql = "SELECT * FROM TiposUsuario";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);

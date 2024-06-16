@@ -58,6 +58,45 @@ class Usuarios_ctrl
         ]);
     }
 
+    //Editar usuario por su ID
+    public function editarUsuarioPorId($f3)
+    {
+        $idUsuario = $f3->get('POST.usuario_id');
+        $usuario_nombre = $f3->get('POST.usuario_nombre');
+        $usuario_cedula = $f3->get('POST.usuario_cedula');
+        $usuario_telefono = $f3->get('POST.usuario_telefono');
+        $usuario_correo = $f3->get('POST.usuario_correo');
+        $usuario_usuario = $f3->get('POST.usuario_usuario');
+        $usuario_clave = $f3->get('POST.usuario_clave');
+
+        // Cargar el usuario por su ID
+        $this->M_Usuarios->load(['id=?', $idUsuario]);
+
+        if ($this->M_Usuarios->loaded() > 0) {
+            // Actualizar los datos del usuario
+            $this->M_Usuarios->set('nombre', $usuario_nombre);
+            $this->M_Usuarios->set('cedula', $usuario_cedula);
+            $this->M_Usuarios->set('telefono', $usuario_telefono);
+            $this->M_Usuarios->set('correo', $usuario_correo);
+            $this->M_Usuarios->set('usuario', $usuario_usuario);
+            $this->M_Usuarios->set('contraseña', $usuario_clave,); // Almacenar la contraseña de forma segura
+
+
+            $this->M_Usuarios->save();
+
+            $mensaje = "Usuario editado correctamente";
+            $retorno = 1;
+        } else {
+            $mensaje = "El usuario no está registrado.";
+            $retorno = 0;
+        }
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode([
+            'mensaje' => $mensaje,
+            'retorno' => $retorno
+        ]);
+    }
 
 
 
@@ -99,12 +138,12 @@ class Usuarios_ctrl
             'usuario_activo' => $usuario->get('estado'),
             'tipo_usuario_id' => $usuario->get('tipo_usuario_id'),
             'retorno' => $retorno
-           
+
         ]);
     }
 
 
-    
+
 
     public function recuperarClave($f3)
     {
@@ -129,6 +168,46 @@ class Usuarios_ctrl
 
         echo json_encode([
             'mensaje' => $mensaje,
+            'retorno' => $retorno
+        ]);
+    }
+
+    // Función para listar un usuario por su ID
+    public function listarUsuarioPorId($f3)
+    {
+        $idUsuario = $f3->get('POST.usuario_id');
+
+        // Cargar el usuario por su ID
+        $this->M_Usuarios->load(['id=?', $idUsuario]);
+
+        if ($this->M_Usuarios->loaded() > 0) {
+            // Usuario encontrado, devolver la información
+            $usuario = [
+                'id' => $this->M_Usuarios->get('id'),
+                'nombre' => $this->M_Usuarios->get('nombre'),
+                'cedula' => $this->M_Usuarios->get('cedula'),
+                'telefono' => $this->M_Usuarios->get('telefono'),
+                'correo' => $this->M_Usuarios->get('correo'),
+                'usuario' => $this->M_Usuarios->get('usuario'),
+                'contraseña' => $this->M_Usuarios->get('contraseña'),
+                'tipo_usuario_id' => $this->M_Usuarios->get('tipo_usuario_id'),
+                'estado' => $this->M_Usuarios->get('estado'),
+                'fecha_creacion' => $this->M_Usuarios->get('fecha_creacion')
+            ];
+
+            $mensaje = "Usuario encontrado.";
+            $retorno = 1;
+        } else {
+            // Usuario no encontrado
+            $usuario = null;
+            $mensaje = "Usuario no encontrado.";
+            $retorno = 0;
+        }
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode([
+            'mensaje' => $mensaje,
+            'usuario' => $usuario,
             'retorno' => $retorno
         ]);
     }

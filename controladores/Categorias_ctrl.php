@@ -35,7 +35,7 @@ class Categorias_ctrl
         $estado = $f3->get('POST.estado');
 
 
-        if (empty($nombre) || empty($descripcion) || empty($usuario_id) || empty($estado)) {
+        if (empty($nombre) || empty($descripcion) || empty($usuario_id) ) {
             echo json_encode([
                 'mensaje' => 'Todos los campos son obligatorios.',
                 'data' => [],

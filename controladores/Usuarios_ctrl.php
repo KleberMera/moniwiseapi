@@ -97,7 +97,9 @@ class Usuarios_ctrl
             'usuario_nombre' => $usuario->get('nombre'),
             'usuario_id' => $usuario->get('id'),
             'usuario_activo' => $usuario->get('estado'),
+            'tipo_usuario_id' => $usuario->get('tipo_usuario_id'),
             'retorno' => $retorno
+           
         ]);
     }
 

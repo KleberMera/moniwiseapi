@@ -25,6 +25,33 @@ class Categorias_ctrl
         echo json_encode($response);
     }
 
+    //Obtener Categoria por ID
+    public function verCategoriaPorId($f3)
+    {
+        $usuario_id = $f3->get('POST.usuario_id');
+
+        if (empty($usuario_id)) {
+            echo json_encode([
+                'mensaje' => 'El ID no puede estar vacio.',
+                'data' => [],
+                'retorno' => 0
+            ]);
+            return;
+        }
+
+        // Ejecuta la consulta
+        $item = $f3->DB->exec("SELECT * FROM Categorias WHERE usuario_id = ?", [$usuario_id]);
+
+        // Formatear la respuesta
+        $response = [
+            'cantidad' => count($item),
+            'data' => $item
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
+
     //Registrar Categoria 
     public function registrarCategoria($f3)
     {

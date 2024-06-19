@@ -211,4 +211,52 @@ class Usuarios_ctrl
             'retorno' => $retorno
         ]);
     }
+
+
+    //Ver Usuarios
+    public function verUsuarios($f3)
+    {
+
+        $cadenaSql = "SELECT * FROM usuarios Where tipo_usuario_id = 1";
+
+        // Ejecuta la consulta
+        $items = $f3->DB->exec($cadenaSql);
+
+        // Formatear la respuesta
+        $response = [
+            'cantidad' => count($items),
+            'data' => $items
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
+
+
+    public function cambiarEstadoUsuario($f3)
+    {
+        $idUsuario = $f3->get('POST.usuario_id');
+        $nuevo_estado = $f3->get('POST.estado');
+
+        // Cargar el usuario por su ID
+        $this->M_Usuarios->load(['id=?', $idUsuario]);
+
+        if ($this->M_Usuarios->loaded() > 0) {
+            // Actualizar el estado del usuario
+            $this->M_Usuarios->set('estado', $nuevo_estado);
+            $this->M_Usuarios->save();
+
+            $mensaje = "Estado del usuario actualizado correctamente.";
+            $retorno = 1;
+        } else {
+            $mensaje = "Usuario no encontrado.";
+            $retorno = 0;
+        }
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode([
+            'mensaje' => $mensaje,
+            'retorno' => $retorno
+        ]);
+    }
 } //fin clase

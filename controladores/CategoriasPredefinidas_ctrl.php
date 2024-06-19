@@ -25,4 +25,22 @@ class CategoriasPredefinidas_ctrl
         echo json_encode($response);
     }
 
+
+    public function crearCategoriaPredefinida($f3)
+    {
+        $nombre = $f3->get('POST.nombre');
+
+        $cadenaSql = "INSERT INTO CategoriasPredefinidas (nombre) VALUES (:nombre)";
+
+        // Ejecuta la consulta
+        $f3->DB->exec($cadenaSql, ['nombre' => $nombre]);
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode(
+            [
+                'mensaje' => 'Categoria creada con éxito'
+
+            ]
+        );
+    }
 }

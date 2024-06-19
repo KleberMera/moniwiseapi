@@ -25,6 +25,31 @@ class Categorias_ctrl
         echo json_encode($response);
     }
 
+
+    public function verTodasCategoriasConNombreUsuario($f3)
+    {
+        $cadenaSql = "
+        SELECT c.id, c.nombre, c.descripcion, c.estado, c.usuario_id, u.nombre AS nombre_usuario 
+        FROM Categorias c
+        JOIN Usuarios u ON c.usuario_id = u.id
+    ";
+
+
+        // Ejecuta la consulta
+        $items = $f3->DB->exec($cadenaSql);
+
+        // Formatear la respuesta
+        $response = [
+            'cantidad' => count($items),
+            'data' => $items
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
+
+
+
     //Obtener Categoria por ID
     public function verCategoriaPorId($f3)
     {
@@ -62,7 +87,7 @@ class Categorias_ctrl
         $estado = $f3->get('POST.estado');
 
 
-        if (empty($nombre) || empty($descripcion) || empty($usuario_id) ) {
+        if (empty($nombre) || empty($descripcion) || empty($usuario_id)) {
             echo json_encode([
                 'mensaje' => 'Todos los campos son obligatorios.',
                 'data' => [],

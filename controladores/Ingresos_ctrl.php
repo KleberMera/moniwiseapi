@@ -11,7 +11,7 @@ class Ingresos_ctrl
     
     public function verIngresos($f3)
     {
-        $cadenaSql = "SELECT * FROM Ingresos";
+        $cadenaSql = "SELECT * FROM ingresos";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);
@@ -30,7 +30,7 @@ class Ingresos_ctrl
     public function verIngresosUsuario($f3)
     {
         $usuario_id = $f3->get('POST.usuario_id');
-        $cadenaSql = "SELECT * FROM Ingresos WHERE usuario_id = ?";
+        $cadenaSql = "SELECT * FROM ingresos WHERE usuario_id = ?";
         $items = $f3->DB->exec($cadenaSql, [$usuario_id]);
 
         // Formatear la respuesta

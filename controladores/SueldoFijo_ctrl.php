@@ -10,7 +10,7 @@ class SueldoFijo_ctrl
 
     public function verSueldoFijo($f3)
     {
-        $cadenaSql = "SELECT * FROM SueldoFijo";
+        $cadenaSql = "SELECT * FROM sueldofijo";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);
@@ -39,7 +39,7 @@ class SueldoFijo_ctrl
             return;
         }
 
-        $cadenaSql = "SELECT * FROM SueldoFijo WHERE usuario_id = ?";
+        $cadenaSql = "SELECT * FROM sueldofijo WHERE usuario_id = ?";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql, $usuario_id);

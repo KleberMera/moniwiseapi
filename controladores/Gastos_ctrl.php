@@ -10,7 +10,7 @@ class Gastos_ctrl
 
     public function verGastos($f3)
     {
-        $cadenaSql = "SELECT * FROM Gastos";
+        $cadenaSql = "SELECT * FROM gastos";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);
@@ -47,7 +47,7 @@ class Gastos_ctrl
             );
         } else {
             //Insertar el nuevo ingreso en la base de datos
-            $cadenaSql = "INSERT INTO Gastos (monto, fecha, descripcion, categoria_id, usuario_id, estado_pago) VALUES (:monto, :fecha, :descripcion, :categoria_id, :usuario_id, :estado_pago)";
+            $cadenaSql = "INSERT INTO gastos (monto, fecha, descripcion, categoria_id, usuario_id, estado_pago) VALUES (:monto, :fecha, :descripcion, :categoria_id, :usuario_id, :estado_pago)";
 
             // Ejecuta la consulta
             $f3->DB->exec($cadenaSql, [

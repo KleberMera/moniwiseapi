@@ -10,7 +10,7 @@ class CategoriasPredefinidas_ctrl
 
     public function verCategoriasPredefinidas($f3)
     {
-        $cadenaSql = "SELECT * FROM CategoriasPredefinidas";
+        $cadenaSql = "SELECT * FROM categoriaspredefinidas";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);
@@ -30,7 +30,7 @@ class CategoriasPredefinidas_ctrl
     {
         $nombre = $f3->get('POST.nombre');
 
-        $cadenaSql = "INSERT INTO CategoriasPredefinidas (nombre) VALUES (:nombre)";
+        $cadenaSql = "INSERT INTO categoriaspredefinidas (nombre) VALUES (:nombre)";
 
         // Ejecuta la consulta
         $f3->DB->exec($cadenaSql, ['nombre' => $nombre]);

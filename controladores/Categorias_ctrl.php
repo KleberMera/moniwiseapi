@@ -10,7 +10,7 @@ class Categorias_ctrl
 
     public function verCategorias($f3)
     {
-        $cadenaSql = "SELECT * FROM Categorias";
+        $cadenaSql = "SELECT * FROM categorias";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);
@@ -30,7 +30,7 @@ class Categorias_ctrl
     {
         $cadenaSql = "
         SELECT c.id, c.nombre, c.descripcion, c.estado, c.usuario_id, u.nombre AS nombre_usuario 
-        FROM Categorias c
+        FROM categorias c
         JOIN Usuarios u ON c.usuario_id = u.id
     ";
 
@@ -65,7 +65,7 @@ class Categorias_ctrl
         }
 
         // Ejecuta la consulta
-        $item = $f3->DB->exec("SELECT * FROM Categorias WHERE usuario_id = ?", [$usuario_id]);
+        $item = $f3->DB->exec("SELECT * FROM categorias WHERE usuario_id = ?", [$usuario_id]);
 
         // Formatear la respuesta
         $response = [

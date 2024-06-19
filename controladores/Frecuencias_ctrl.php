@@ -10,7 +10,7 @@ class Frecuencias_ctrl
 
     public function verFrecuencias($f3)
     {
-        $cadenaSql = "SELECT * FROM Frecuencias";
+        $cadenaSql = "SELECT * FROM frecuencias";
 
         // Ejecuta la consulta
         $items = $f3->DB->exec($cadenaSql);

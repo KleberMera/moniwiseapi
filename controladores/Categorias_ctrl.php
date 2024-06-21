@@ -31,7 +31,7 @@ class Categorias_ctrl
         $cadenaSql = "
         SELECT c.id, c.nombre, c.descripcion, c.estado, c.usuario_id, u.nombre AS nombre_usuario 
         FROM categorias c
-        JOIN Usuarios u ON c.usuario_id = u.id
+        JOIN usuarios u ON c.usuario_id = u.id
     ";
 
 

@@ -41,7 +41,7 @@ class TipoUsuarios_ctrl
 
         // Consulta SQL para obtener los menús por tipo de usuario
         $cadenaSql = "SELECT nombre, icono, pagina, estado 
-                      FROM Menu 
+                      FROM menu 
                       WHERE tipo_usuario_id = :tipo_usuario_id";
 
         // Parámetros para la consulta preparada

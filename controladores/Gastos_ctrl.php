@@ -38,7 +38,7 @@ class Gastos_ctrl
         $retorno = 0;
 
         //Validar el ingreso de todos los campos
-        if (empty($monto) || empty($fecha) || empty($descripcion) || empty($categoria_id) || empty($usuario_id) || empty($estado_pago)) {
+        if (empty($monto) || empty($fecha) || empty($descripcion) || empty($categoria_id) || empty($usuario_id)) {
             echo json_encode(
                 [
                     'mensaje' => 'Los campos no pueden estar vacíos',

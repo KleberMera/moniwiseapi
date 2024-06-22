@@ -85,4 +85,30 @@ class Ingresos_ctrl
 
     }
 
+    public function cambiarMontoPorId($f3)
+    {
+        $id = $f3->get('POST.id');
+        $monto = $f3->get('POST.monto');
+
+        // Validar datos
+        if (empty($id) || empty($monto)) {
+            $mensaje = "Todos los campos son obligatorios.";
+            $retorno = 0;
+        } else {
+            // Actualizar el monto del ingreso en la base de datos
+            $this->M_Ingresos->set('monto', $monto);
+            $this->M_Ingresos->where('id', $id);
+            $this->M_Ingresos->update();
+
+            $mensaje = "Monto cambiado correctamente";
+            $retorno = 1;
+        }
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode([
+            'mensaje' => $mensaje,
+            'retorno' => $retorno
+        ]);
+    }
+
 }

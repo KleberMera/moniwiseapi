@@ -27,6 +27,24 @@ class MetasAhorro_ctrl
         echo json_encode($response);
     }
 
+    //Ver metas ahorro por usuario
+    public function verMetasAhorroUsuario($f3)
+    {
+        $cadenaSql = "SELECT * FROM metasahorro WHERE usuario_id = ?";
+        $usuario_id = $f3->get('POST.usuario_id');
+        $f3->set('usuario_id', $usuario_id);
+        $items = $f3->DB->exec($cadenaSql, [$usuario_id]);
+
+        // Formatear la respuesta
+        $response = [
+            'cantidad' => count($items),
+            'data' => $items
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
+
 
     public function registrarMetasAhorro($f3)
     {

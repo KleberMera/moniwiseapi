@@ -25,6 +25,51 @@ class PagosAhorro_ctrl
         echo json_encode($response);
     }
 
+    //ver pagos ahorro por usuario
+    public function verPagosAhorroUsuario($f3)
+    {
+        $cadenaSql = "SELECT * FROM pagosahorro WHERE usuario_id = ?";
+        $usuario_id = $f3->get('POST.usuario_id');
+        $f3->set('usuario_id', $usuario_id);
+        $items = $f3->DB->exec($cadenaSql, [$usuario_id]);
+
+        // Formatear la respuesta
+        $response = [
+            'cantidad' => count($items),
+            'data' => $items
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
+
+    public function cambiarEstadoPagosAhorro($f3)
+    {
+        $id = $f3->get('POST.id');
+        $estado_pago = $f3->get('POST.estado_pago');
+
+        // Cargar el pagos ahorro por su ID
+        $this->M_PagosAhorro->load(['id=?', $id]);
+
+        if ($this->M_PagosAhorro->loaded() > 0) {
+            // Actualizar el estado del pagos ahorro
+            $this->M_PagosAhorro->set('estado_pago', $estado_pago);
+            $this->M_PagosAhorro->save();
+
+            $mensaje = "Estado del pagos ahorro actualizado correctamente.";
+            $retorno = 1;
+        } else {
+            $mensaje = "Pagos ahorro no encontrado.";
+            $retorno = 0;
+        }
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode([
+            'mensaje' => $mensaje,
+            'retorno' => $retorno
+        ]); 
+    }
+
 
     //Registrar pagos ahorro
     public function registrarPagosAhorro($f3)

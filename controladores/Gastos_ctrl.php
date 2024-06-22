@@ -70,12 +70,15 @@ class Gastos_ctrl
         }
     }
 
-    public function actualizarSueldoFijo($f3)
+     public function actualizarSueldoFijo($f3)
     {
-        // Obtener los parámetros del cuerpo POST
-        $json = json_decode($f3->get('BODY'), true);
-        $usuario_id = $json['usuario_id'] ?? null;
-        $monto = $json['monto'] ?? null;
+        // Obtener los parámetros desde $_POST
+        $usuario_id = $_POST['usuario_id'] ?? null;
+        $monto = $_POST['monto'] ?? null;
+
+        // Depurar para verificar los valores de $usuario_id y $monto
+        error_log('Usuario ID: ' . $usuario_id);
+        error_log('Monto: ' . $monto);
 
         if (isset($usuario_id) && isset($monto)) {
             // Obtener el sueldo fijo actual del usuario desde la base de datos
@@ -113,7 +116,6 @@ class Gastos_ctrl
             ]);
         }
     }
-
         
     
 }

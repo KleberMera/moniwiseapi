@@ -26,6 +26,10 @@ class Gastos_ctrl
     }
 
 
+
+
+
+
     public function registrarGastos($f3)
     {
 
@@ -70,7 +74,7 @@ class Gastos_ctrl
         }
     }
 
-     public function actualizarSueldoFijo($f3)
+    public function actualizarSueldoFijo($f3)
     {
         // Obtener los parámetros desde $_POST
         $usuario_id = $_POST['usuario_id'] ?? null;
@@ -116,7 +120,7 @@ class Gastos_ctrl
             ]);
         }
     }
-        
+
 
     //Cambiar el estado de un gasto
     public function cambiarEstadoGasto($f3)
@@ -128,11 +132,11 @@ class Gastos_ctrl
 
         if ($this->M_Gastos->loaded() > 0) {
             $this->M_Gastos->set('estado_pago', $estado_pago);
-            $this->M_Gastos->save();    
+            $this->M_Gastos->save();
 
             $mensaje = "Estado cambiado correctamente";
             $retorno = 1;
-        }   else {
+        } else {
             $mensaje = "El gasto no está registrado.";
             $retorno = 0;
         }
@@ -140,7 +144,6 @@ class Gastos_ctrl
         echo json_encode([
             'mensaje' => $mensaje,
             'retorno' => $retorno
-        ]); 
+        ]);
     }
-    
 }

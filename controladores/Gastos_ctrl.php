@@ -71,49 +71,49 @@ class Gastos_ctrl
     }
 
     public function actualizarSueldoFijo($f3)
-{
-    // Obtener los parámetros del cuerpo POST
-    $json = json_decode($f3->get('BODY'), true);
-    $usuario_id = $json['usuario_id'] ?? null;
-    $monto = $json['monto'] ?? null;
+    {
+        // Obtener los parámetros del cuerpo POST
+        $json = json_decode($f3->get('BODY'), true);
+        $usuario_id = $json['usuario_id'] ?? null;
+        $monto = $json['monto'] ?? null;
 
-    if (isset($usuario_id) && isset($monto)) {
-        // Obtener el sueldo fijo actual del usuario desde la base de datos
-        $cadenaSqlSueldo = "SELECT monto FROM sueldofijo WHERE usuario_id = :usuario_id";
-        $sueldoResult = $f3->DB->exec($cadenaSqlSueldo, ['usuario_id' => $usuario_id]);
+        if (isset($usuario_id) && isset($monto)) {
+            // Obtener el sueldo fijo actual del usuario desde la base de datos
+            $cadenaSqlSueldo = "SELECT monto FROM sueldofijo WHERE usuario_id = :usuario_id";
+            $sueldoResult = $f3->DB->exec($cadenaSqlSueldo, ['usuario_id' => $usuario_id]);
 
-        if (count($sueldoResult) > 0) {
-            $sueldoFijo = $sueldoResult[0]['monto'];
-            $nuevoSueldoFijo = $sueldoFijo - $monto;
+            if (count($sueldoResult) > 0) {
+                $sueldoFijo = $sueldoResult[0]['monto'];
+                $nuevoSueldoFijo = $sueldoFijo - $monto;
 
-            // Actualizar el sueldo fijo en la base de datos
-            $cadenaSqlActualizarSueldo = "UPDATE sueldofijo SET monto = :nuevo_sueldo WHERE usuario_id = :usuario_id";
-            $f3->DB->exec($cadenaSqlActualizarSueldo, [
-                'nuevo_sueldo' => $nuevoSueldoFijo,
-                'usuario_id' => $usuario_id
-            ]);
+                // Actualizar el sueldo fijo en la base de datos
+                $cadenaSqlActualizarSueldo = "UPDATE sueldofijo SET monto = :nuevo_sueldo WHERE usuario_id = :usuario_id";
+                $f3->DB->exec($cadenaSqlActualizarSueldo, [
+                    'nuevo_sueldo' => $nuevoSueldoFijo,
+                    'usuario_id' => $usuario_id
+                ]);
 
-            // Devolver una respuesta como JSON
-            echo json_encode([
-                'mensaje' => 'Sueldo fijo actualizado correctamente',
-                'retorno' => 1
-            ]);
+                // Devolver una respuesta como JSON
+                echo json_encode([
+                    'mensaje' => 'Sueldo fijo actualizado correctamente',
+                    'retorno' => 1
+                ]);
+            } else {
+                // Devolver una respuesta de error como JSON si el usuario no tiene sueldo fijo registrado
+                echo json_encode([
+                    'mensaje' => 'Usuario no encontrado o sueldo fijo no disponible',
+                    'retorno' => 0
+                ]);
+            }
         } else {
-            // Devolver una respuesta de error como JSON si el usuario no tiene sueldo fijo registrado
+            // Devolver una respuesta de error como JSON si los parámetros no están definidos correctamente
             echo json_encode([
-                'mensaje' => 'Usuario no encontrado o sueldo fijo no disponible',
+                'mensaje' => 'Parámetros incorrectos',
                 'retorno' => 0
             ]);
         }
-    } else {
-        // Devolver una respuesta de error como JSON si los parámetros no están definidos correctamente
-        echo json_encode([
-            'mensaje' => 'Parámetros incorrectos',
-            'retorno' => 0
-        ]);
     }
-}
 
-    
+        
     
 }

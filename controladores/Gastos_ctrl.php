@@ -117,5 +117,30 @@ class Gastos_ctrl
         }
     }
         
+
+    //Cambiar el estado de un gasto
+    public function cambiarEstadoGasto($f3)
+    {
+        $id = $f3->get('POST.id');
+        $estado_pago = $f3->get('POST.estado_pago');
+
+        $this->M_Gastos->load(['id=?', $id]);
+
+        if ($this->M_Gastos->loaded() > 0) {
+            $this->M_Gastos->set('estado_pago', $estado_pago);
+            $this->M_Gastos->save();    
+
+            $mensaje = "Estado cambiado correctamente";
+            $retorno = 1;
+        }   else {
+            $mensaje = "El gasto no está registrado.";
+            $retorno = 0;
+        }
+
+        echo json_encode([
+            'mensaje' => $mensaje,
+            'retorno' => $retorno
+        ]); 
+    }
     
 }

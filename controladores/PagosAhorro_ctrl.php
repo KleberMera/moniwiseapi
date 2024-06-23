@@ -110,4 +110,59 @@ class PagosAhorro_ctrl
             'retorno' => $retorno
         ]);
     }
+
+
+    public function verPagosAhorroUsuarioDatos($f3)
+    {
+        $usuario_id = $f3->get('POST.usuario_id');
+        $cadenaSql = "
+            SELECT 
+                usuario_id,
+                COUNT(*) AS total_pagos,
+                SUM(CASE WHEN estado_pago = 1 THEN 1 ELSE 0 END) AS pagos_realizados,
+                SUM(CASE WHEN estado_pago = 0 OR estado_pago IS NULL THEN 1 ELSE 0 END) AS pagos_pendientes,
+                SUM(monto) AS monto_total,
+                SUM(CASE WHEN estado_pago = 1 THEN monto ELSE 0 END) AS monto_pagado,
+                SUM(CASE WHEN estado_pago = 0 OR estado_pago IS NULL THEN monto ELSE 0 END) AS monto_pendiente
+            FROM 
+                pagosahorro
+            WHERE 
+                usuario_id = ?
+            GROUP BY 
+                usuario_id";
+        
+        // Ejecuta la consulta
+        $items = $f3->DB->exec($cadenaSql, [$usuario_id]);
+
+        // Formatear la respuesta
+        $response = [
+            'data' => $items
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
+
+
+    
+    public function gastosPorCategoriaUsuario($f3)
+    {
+        $usuario_id = $f3->get('POST.usuario_id');
+
+       $cadenaSql = "SELECT c.nombre, SUM(g.monto) as total_gasto
+            FROM gastos g
+            JOIN categorias c ON g.categoria_id = c.id
+            WHERE g.usuario_id = ?
+            GROUP BY c.nombre";
+
+        $items = $f3->DB->exec($cadenaSql, [$usuario_id]);
+
+        // Formatear la respuesta
+        $response = [
+            'data' => $items
+        ];
+
+        // Devolver la respuesta en formato JSON
+        echo json_encode($response);
+    }
 }
